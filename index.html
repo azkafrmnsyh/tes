@@ -1,0 +1,893 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>For yayaaa</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=More+Sugar&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "More Sugar", cursive;
+        background-color: #ff90bc;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+      header {
+        background-color: #8b93ff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .nav img {
+        display: block;
+      }
+      .nav p {
+        margin: 0;
+        font-size: 1rem;
+        color: #fff7fc;
+      }
+
+      header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 9999px;
+        object-fit: cover;
+      }
+      header button {
+        color: #fff7fc;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      main {
+        padding: 2.5rem 1.5rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-grow: 1;
+      }
+      .birthday-text,
+      .footer-text,
+      .photo-date {
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid transparent;
+        display: inline-block;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .birthday-text {
+        color: #fff7fc;
+        font-size: 0.875rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 0.5rem;
+      }
+
+      .birthday-name {
+        color: #fff7fc;
+        font-size: 2rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 1rem;
+      }
+      h1 {
+        color: #fff7fc;
+        font-size: 10rem;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid transparent;
+        display: inline-block;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .photo-card {
+        background: #fff7fc;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+        margin-bottom: 1.5rem;
+        max-width: 20rem;
+        width: 100%;
+        text-align: center;
+        border-radius: 0.5rem;
+      }
+      .photo-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 0.25rem;
+        object-fit: cover;
+        perspective: 1000px;
+        max-width: 90vw;
+        margin: auto;
+        position: relative;
+      }
+
+      /* Stack container to hold images */
+      .stack {
+        position: relative;
+        margin: auto;
+      }
+
+      /* Each image style */
+      .stack img {
+        border: 4px solid white;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        object-fit: cover;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.6s ease, box-shadow 0.6s ease;
+        will-change: transform;
+        width: 100%;
+        height: auto;
+        border-radius: 0.25rem;
+        perspective: 1000px;
+        max-width: 90vw;
+        margin: auto;
+        position: relative;
+      }
+
+      /* Different rotation and offset for stacked images */
+      .stack img:nth-child(1) {
+        position: absolute;
+        /* top: 0;
+        left: 0; */
+        z-index: 5;
+        transform: rotate(0deg) translate(0, 0);
+      }
+      .stack img:nth-child(2) {
+        position: absolute;
+        /* top: 8px;
+        left: 8px; */
+        z-index: 4;
+        transform: rotate(-8deg);
+      }
+      .stack img:nth-child(3) {
+        position: absolute;
+        /* top: 16px;
+        left: 16px; */
+        z-index: 3;
+        transform: rotate(8deg);
+      }
+      .stack img:nth-child(4) {
+        position: absolute;
+        /* top: 24px;
+        left: 24px; */
+        z-index: 2;
+        transform: rotate(-5deg);
+      }
+      .stack img:nth-child(5) {
+        /* top: 32px;
+        left: 32px; */
+        z-index: 1;
+        transform: rotate(5deg);
+      }
+
+      /* Active top image style */
+      .stack img.top {
+        z-index: 10 !important;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Animation for desktop: slide left or right then move down and fade out */
+      @keyframes slideLeftDown {
+        0% {
+          transform: translateX(0) translateY(0) rotate(0deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        50% {
+          transform: translateX(-350px) translateY(0) rotate(-20deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        100% {
+          transform: translateX(-350px) translateY(350px) rotate(-20deg);
+          opacity: 0;
+          z-index: 0;
+        }
+      }
+      @keyframes slideRightDown {
+        0% {
+          transform: translateX(0) translateY(0) rotate(0deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        50% {
+          transform: translateX(350px) translateY(0) rotate(20deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        100% {
+          transform: translateX(350px) translateY(350px) rotate(20deg);
+          opacity: 0;
+          z-index: 0;
+        }
+      }
+
+      /* Animation for mobile swipe: slide left or right then move down and fade out */
+      @keyframes swipeLeftDown {
+        0% {
+          transform: translateX(0) translateY(0) rotate(0deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        50% {
+          transform: translateX(-150vw) translateY(0) rotate(-20deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        100% {
+          transform: translateX(-150vw) translateY(150vw) rotate(-20deg);
+          opacity: 0;
+          z-index: 0;
+        }
+      }
+      @keyframes swipeRightDown {
+        0% {
+          transform: translateX(0) translateY(0) rotate(0deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        50% {
+          transform: translateX(150vw) translateY(0) rotate(20deg);
+          opacity: 1;
+          z-index: 10;
+        }
+        100% {
+          transform: translateX(150vw) translateY(150vw) rotate(20deg);
+          opacity: 0;
+          z-index: 0;
+        }
+      }
+
+      /* Classes to trigger animations */
+      .slide-left {
+        animation: slideLeftDown 0.8s forwards;
+      }
+      .slide-right {
+        animation: slideRightDown 0.8s forwards;
+      }
+      .swipe-left {
+        animation: swipeLeftDown 0.8s forwards;
+      }
+      .swipe-right {
+        animation: swipeRightDown 0.8s forwards;
+      }
+
+      /* Hide overflow so images moving out don't cause scroll */
+      body,
+      html {
+        overflow-x: hidden;
+      }
+
+      .photo-date {
+        color: #ff90bc;
+        margin-top: 2rem;
+        font-size: 1.125rem;
+      }
+      #showCardBtn {
+        background-color: #8b93ff;
+        color: #fff7fc;
+        font-weight: 700;
+        border-radius: 0.5rem;
+        width: 100%;
+        max-width: 20rem;
+        padding: 0.75rem 0;
+        font-size: 1.125rem;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid transparent;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      #showCardBtn.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #showCardBtn:hover {
+        background-color: #6e77ff;
+      }
+      footer {
+        color: #fff7fc;
+        text-align: center;
+        font-size: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 0.5rem 0;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid transparent;
+        display: inline-block;
+        box-sizing: border-box;
+      }
+      /* Popup */
+      #popupCard {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      #popupCard.show {
+        display: flex;
+      }
+      #popupCard > div {
+        background: #fff7fc;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        padding: 2rem 2.5rem;
+        max-width: 22rem;
+        width: 100%;
+        text-align: center;
+        font-family: "More Sugar", cursive;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ff90bc;
+        position: relative;
+        overflow: visible;
+        white-space: normal;
+        border-right: none;
+        display: block;
+        box-sizing: border-box;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      #popupCard.show > div {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      #popupCard > div p {
+        color: #4b5563;
+        font-weight: 600;
+        font-size: 1rem;
+        margin: 1.5rem 0 2rem;
+        white-space: normal;
+        overflow-wrap: break-word;
+        border-radius: 0.5rem;
+        background: #fff0f6;
+        box-shadow: 0 4px 8px rgba(236, 72, 153, 0.3);
+        padding: 1rem 1.5rem;
+        position: relative;
+        display: block;
+        border-right: none;
+        overflow: visible;
+        font-family: "More Sugar", cursive;
+      }
+      #popupCard > div p::before,
+      #popupCard > div p::after {
+        color: #ff90bc;
+        font-size: 3rem;
+        position: absolute;
+        font-weight: 700;
+        font-family: serif;
+        user-select: none;
+        line-height: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 1;
+      }
+      #popupCard > div p::before {
+        content: "“";
+        left: 0.3rem;
+        top: 0.5rem;
+        transform: translate(-50%, -50%);
+      }
+      #popupCard > div p::after {
+        content: "”";
+        right: 0.3rem;
+        top: 0.3rem;
+        top: auto;
+        transform: translate(50%, 50%);
+      }
+      #popupCard > div p.quotes-visible::before,
+      #popupCard > div p.quotes-visible::after {
+        opacity: 1;
+      }
+      #popupCard > div button {
+        background-color: #8b93ff;
+        color: #fff7fc;
+        font-weight: 700;
+        border-radius: 0.5rem;
+        padding: 0.75rem 2rem;
+        border: none;
+        cursor: pointer;
+        font-size: 1.125rem;
+        transition: background-color 0.3s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid transparent;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        font-family: "More Sugar", cursive;
+      }
+      #popupCard > div button.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #popupCard > div button:hover {
+        background-color: #6e77ff;
+      }
+      /* Dekorasi gambar pita merah muda */
+      #popupCard > div .ribbon-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 70px;
+        height: 70px;
+        z-index: 10;
+        pointer-events: none;
+        user-select: none;
+        transform: rotate(-45deg);
+        transform-origin: top left;
+      }
+      @media (max-width: 640px) {
+        h1 {
+          font-size: 1.5rem;
+          white-space: normal;
+        }
+        .birthday-text {
+          font-size: 0.75rem;
+          letter-spacing: 0.15em;
+        }
+        .photo-card {
+          max-width: 100%;
+          padding: 0.75rem;
+        }
+        #showCardBtn {
+          max-width: 100%;
+          font-size: 1rem;
+          padding: 0.5rem 0;
+        }
+        footer {
+          font-size: 0.625rem;
+          white-space: normal;
+        }
+        #popupCard > div {
+          max-width: 90vw;
+          padding: 1.5rem 1.75rem;
+          font-size: 1.25rem;
+        }
+        #popupCard > div p {
+          font-size: 0.9rem;
+          margin: 1rem 0 1.5rem;
+          padding: 0.75rem 1rem;
+        }
+        #popupCard > div button {
+          font-size: 1rem;
+          padding: 0.5rem 1.5rem;
+        }
+        #popupCard > div .ribbon-img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .playButton {
+        background-color: #ff72ab;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        color: #fff7fc;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s;
+      }
+
+      .playButton:hover {
+        background-color: #ff90bc;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <img src="assets/yaya.png" alt="Foto yayaa" width="40" height="40" />
+        <p>Inii yayaaa</p>
+      </div>
+
+      <button aria-label="Menu" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </header>
+
+    <main>
+      <p class="birthday-text" id="birthdayText"></p>
+      <h1 id="birthdayName" class="birthday-name"></h1>
+      <div class="photo-card">
+        <div
+          aria-label="Image carousel with stack animation"
+          class="img"
+          id="carousel"
+        >
+          <div class="stack" id="stack">
+            <img
+              alt="Image 1: Mountain landscape with blue sky"
+              class="top"
+              draggable="false"
+              src="assets/yayaa.jpg"
+            />
+            <img
+              alt="Image 2: Forest with tall trees and sunlight"
+              draggable="false"
+              src="assets/yayaa.jpg"
+            />
+            <img
+              alt="Image 3: Beach with waves and sunset"
+              draggable="false"
+              src="assets/yayaa.jpg"
+            />
+            <img
+              alt="Image 4: City skyline at night with lights"
+              draggable="false"
+              src="assets/yayaa.jpg"
+            />
+            <img
+              alt="Image 5: Desert with sand dunes and blue sky"
+              draggable="false"
+              height="320"
+              src="assets/yayaa.jpg"
+            />
+          </div>
+        </div>
+        <p class="photo-date" id="photoDate"></p>
+      </div>
+      <button id="showCardBtn" aria-expanded="false"></button>
+    </main>
+
+    <footer id="footerText"></footer>
+
+    <div
+      id="popupCard"
+      role="alert"
+      aria-live="polite"
+      aria-modal="true"
+      tabindex="-1"
+    >
+      <div>
+        <img
+          src="assets/pita.png"
+          alt="Pink ribbon decoration"
+          class="ribbon-img"
+        />
+        <span id="popupTitle"></span>
+        <p id="popupContent"></p>
+        <button href="#" id="okBtn" type="button">oke!</button>
+      </div>
+    </div>
+
+    <audio
+      id="birthdayAudio"
+      src="assets/A Little Piece of Heaven.mp3"
+      preload="auto"
+    ></audio>
+    <audio id="audioPlayer" src="assets/A Little Piece of Heaven.mp3"></audio>
+    <button class="playButton" id="playButton" aria-expanded="false">
+      <i class="fas fa-play"></i>
+      <!-- Ikon play -->
+    </button>
+
+    <script>
+      // Pembantu animasi mengetik
+      function typeText(element, text, delay = 80) {
+        element.textContent = "";
+        element.style.borderRight = "3px solid #ec4899";
+        let i = 0;
+        return new Promise((resolve) => {
+          const interval = setInterval(() => {
+            element.textContent += text.charAt(i);
+            i++;
+            if (i === text.length) {
+              clearInterval(interval);
+              element.style.borderRight = "none";
+              resolve();
+            }
+          }, delay);
+        });
+      }
+
+      // Animasi fade up menggunakan JS
+      function fadeUp(element, duration = 500, distance = 30) {
+        element.style.opacity = 0;
+        element.style.transform = `translateY(${distance}px)`;
+        element.style.transition = `opacity ${duration}ms ease, transform ${duration}ms ease`;
+        requestAnimationFrame(() => {
+          element.style.opacity = 1;
+          element.style.transform = "translateY(0)";
+        });
+      }
+
+      const birthdayTextEl = document.getElementById("birthdayText");
+      const birthdayNameEl = document.getElementById("birthdayName");
+      const photoDateEl = document.getElementById("photoDate");
+      const showCardBtn = document.getElementById("showCardBtn");
+      const footerTextEl = document.getElementById("footerText");
+
+      const popupCard = document.getElementById("popupCard");
+      const popupTitle = document.getElementById("popupTitle");
+      const popupContent = document.getElementById("popupContent");
+      const okBtn = document.getElementById("okBtn");
+
+      (() => {
+        const stack = document.getElementById("stack");
+        let images = Array.from(stack.querySelectorAll("img"));
+        let isAnimating = false;
+
+        // Detect if mobile
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+        // Touch variables for swipe
+        let startX = 0;
+        let currentX = 0;
+        let isTouching = false;
+
+        // Function to reorder images array and update DOM & classes
+        function reorderImages(direction) {
+          if (direction === "left") {
+            // Move first image to last
+            const first = images.shift();
+            images.push(first);
+          } else if (direction === "right") {
+            // Move last image to first
+            const last = images.pop();
+            images.unshift(last);
+          }
+          // Clear stack and re-append images in new order
+          stack.innerHTML = "";
+          images.forEach((img, i) => {
+            img.classList.remove(
+              "top",
+              "slide-left",
+              "slide-right",
+              "swipe-left",
+              "swipe-right"
+            );
+            // Reset inline styles
+            img.style.animation = "";
+            img.style.zIndex = 5 - i;
+            stack.appendChild(img);
+          });
+          // Set new top image
+          images[0].classList.add("top");
+          images[0].style.zIndex = 10;
+        }
+
+        // Animate top image sliding left or right then reorder
+        function animateSlide(direction) {
+          if (isAnimating) return;
+          isAnimating = true;
+          const topImg = images[0];
+          // Add animation class
+          if (isMobile) {
+            topImg.classList.add(
+              direction === "left" ? "swipe-left" : "swipe-right"
+            );
+          } else {
+            topImg.classList.add(
+              direction === "left" ? "slide-left" : "slide-right"
+            );
+          }
+          // After animation ends, reorder images and reset
+          topImg.addEventListener(
+            "animationend",
+            () => {
+              reorderImages(direction);
+              isAnimating = false;
+            },
+            { once: true }
+          );
+        }
+
+        // Desktop click handlers
+        if (!isMobile) {
+          stack.addEventListener("click", (e) => {
+            if (isAnimating) return;
+            // Determine click position relative to center
+            const rect = stack.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const centerX = rect.width / 2;
+            if (clickX < centerX) {
+              animateSlide("left");
+            } else {
+              animateSlide("right");
+            }
+          });
+        }
+
+        // Mobile touch handlers for swipe
+        if (isMobile) {
+          stack.addEventListener("touchstart", (e) => {
+            if (isAnimating) return;
+            if (e.touches.length === 1) {
+              startX = e.touches[0].clientX;
+              isTouching = true;
+            }
+          });
+
+          stack.addEventListener("touchmove", (e) => {
+            if (!isTouching) return;
+            currentX = e.touches[0].clientX;
+            const diffX = currentX - startX;
+            // Optional: could add drag effect here if desired
+          });
+
+          stack.addEventListener("touchend", (e) => {
+            if (!isTouching) return;
+            isTouching = false;
+            const diffX = currentX - startX;
+            if (Math.abs(diffX) > 40) {
+              animateSlide(diffX < 0 ? "left" : "right");
+            }
+          });
+        }
+      })();
+
+      // Text
+      const birthdayText = "HAPPY BIRTHDAY !!!!";
+      const birthdayName = "Audilia Zoenita Rahman";
+      const photoDate = "9 JUNI 2025";
+      const buttonText = "Coba bukaa";
+      const footerText = "By Azka";
+      const popupTitleText = "Ucapan dari akuu";
+      const popupContentText =
+        "This is the card content that appears when the button is clicked.";
+      const okBtnText = "oke!";
+
+      // Awalnya sembunyikan tombolnya
+      showCardBtn.classList.remove("visible");
+
+      // Animasi pengetikan awal saat halaman dimuat
+      async function introTyping() {
+        await typeText(birthdayTextEl, birthdayText, 80);
+        await typeText(birthdayNameEl, birthdayName, 120);
+        fadeUp(birthdayNameEl, 600, 20);
+        await typeText(photoDateEl, photoDate, 100);
+        // Tampilkan dan ketik tombol hanya setelah pengetikan sebelumnya selesai
+        showCardBtn.classList.add("visible");
+        await typeText(showCardBtn, buttonText, 100);
+        await typeText(footerTextEl, footerText, 80);
+      }
+      introTyping();
+
+      // Animasi pengetikan popup
+      async function openPopup() {
+        popupCard.classList.add("show");
+        popupCard.focus();
+        okBtn.classList.remove("visible");
+        popupTitle.style.borderRight = "3px solid #ec4899";
+        popupContent.style.borderRight = "none";
+        okBtn.style.borderRight = "none";
+        await typeText(popupTitle, popupTitleText, 120);
+        popupTitle.style.borderRight = "none";
+        popupContent.textContent = "";
+        okBtn.textContent = "";
+        // Ketik konten popup terlebih dahulu
+        await typeText(popupContent, popupContentText, 40);
+        // Tampilkan tanda kutip merah muda setelah pengetikan selesai
+        popupContent.classList.add("quotes-visible");
+        // Kemudian tampilkan dan ketik teks tombol
+        okBtn.classList.add("visible");
+        await typeText(okBtn, okBtnText, 80);
+        fadeUp(popupCard.querySelector("div"), 500, 30);
+        showCardBtn.setAttribute("aria-expanded", "true");
+      }
+
+      function closePopup() {
+        const popupContentDiv = popupCard.querySelector("div");
+        popupContentDiv.style.transition =
+          "opacity 300ms ease, transform 300ms ease";
+        popupContentDiv.style.opacity = "0";
+        popupContentDiv.style.transform = "translateY(30px)";
+        setTimeout(() => {
+          popupCard.classList.remove("show");
+          popupContentDiv.style.opacity = "";
+          popupContentDiv.style.transform = "";
+          popupTitle.textContent = "";
+          popupContent.textContent = "";
+          popupContent.classList.remove("quotes-visible");
+          okBtn.textContent = "";
+          okBtn.classList.remove("visible");
+        }, 300);
+        showCardBtn.setAttribute("aria-expanded", "false");
+        showCardBtn.focus();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const playButton = document.querySelector(".playButton");
+        const audioPlayer = document.querySelector("#audioPlayer");
+
+        playButton.addEventListener("click", () => {
+          if (audioPlayer.paused) {
+            audioPlayer.play();
+            playButton.innerHTML = '<i class="fas fa-pause"></i>';
+            playButton.setAttribute("aria-expanded", "true");
+          } else {
+            audioPlayer.pause();
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+            playButton.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        audioPlayer.addEventListener("canplay", () => {
+          console.log("Audio sudah siap untuk diputar");
+        });
+      });
+
+      // Setel ulang konten teks pada awalnya
+      showCardBtn.textContent = "";
+      okBtn.textContent = "";
+      popupTitle.textContent = "";
+      popupContent.textContent = "";
+      okBtn.classList.remove("visible");
+      popupContent.classList.remove("quotes-visible");
+
+      showCardBtn.addEventListener("click", () => {
+        openPopup();
+      });
+
+      okBtn.addEventListener("click", () => {
+        closePopup();
+      });
+
+      // Tutup popup saat mengklik konten luar atau menekan Escape
+      popupCard.addEventListener("click", (e) => {
+        if (e.target === popupCard) {
+          closePopup();
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && popupCard.classList.contains("show")) {
+          closePopup();
+        }
+      });
+    </script>
+  </body>
+</html>
